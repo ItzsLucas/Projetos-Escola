@@ -16,6 +16,7 @@ namespace Ex4_M6
             Console.Clear();
         }
 
+
         static void Main(string[] args)
         {
             int Pescolha;
