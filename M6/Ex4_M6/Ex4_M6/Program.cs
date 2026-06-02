@@ -82,6 +82,7 @@ namespace Ex4_M6
                 }
 
             } while (Pescolha != 0);
+            Console.WriteLine("Obrigado por utilizar o nosso programa");
 
         }
     }
