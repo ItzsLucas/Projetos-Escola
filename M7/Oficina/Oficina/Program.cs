@@ -90,7 +90,7 @@ namespace Oficina
                             }
                             if (opcao > 1 || opcao < 0)
                             {
-                                Console.WriteLine("Digite apenas números entre [0-1]");
+                                Console.WriteLine("Digite apenas números entre [0-1]111");
                             }
                         } while (opcao > 1 || opcao < 0);
 
