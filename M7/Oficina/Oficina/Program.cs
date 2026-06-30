@@ -28,7 +28,6 @@ namespace Oficina
             public string num_chassi { get; set; }
         }
 
-
         public static void Digite()
         {
             Console.WriteLine("Digite qualquer coisa para avançar...");
@@ -38,25 +37,22 @@ namespace Oficina
 
         static void Main(string[] args)
         {
-
-            string FichaClientes = "clientes.txt";
-            string FichaAutomoveis = "automoveis.txt";
+            string FichaClientes = "clientes.csv";
+            string FichaAutomoveis = "automoveis.csv";
             int Pescolha, opcao, id = 0, idAutomovel = 0;
             List<Clientes> ListaClientes = new List<Clientes>();
             List<Clientes> ListaAutomoveis = new List<Clientes>();
 
-
-
             if (!File.Exists(FichaClientes))
             {
                 File.Create(FichaClientes).Close();
-                Console.WriteLine("O ficheiro 'clientes.txt' não existia e foi criado automaticamente!");
+                Console.WriteLine("O ficheiro 'clientes.csv' não existia e foi criado automaticamente!");
             }
 
             if (!File.Exists(FichaAutomoveis))
             {
                 File.Create(FichaAutomoveis).Close();
-                Console.WriteLine("O ficheiro 'automoveis.txt' não existia e foi criado automaticamente!");
+                Console.WriteLine("O ficheiro 'automoveis.csv' não existia e foi criado automaticamente!");
             }
 
             if (File.Exists(FichaClientes))
@@ -89,7 +85,6 @@ namespace Oficina
                 }
             }
 
-
             do
             {
                 //MENU PRINCIPAL
@@ -108,7 +103,6 @@ namespace Oficina
                     }
                 } while (Pescolha > 3 || Pescolha < 0);
                 Console.Clear();
-
 
                 switch (Pescolha)
                 {
@@ -156,9 +150,11 @@ namespace Oficina
                                     Console.Write("\nDigite novamente o número de telemóvel: ");
                                     telemovel = Console.ReadLine();
                                 }
+
+                                
                                 using (StreamWriter sw = new StreamWriter(FichaClientes, true))
                                 {
-                                    sw.WriteLine($"{NovoCliente.ID}   {NovoCliente.Nome}   {NovoCliente.Email}   {NovoCliente.Telemovel}");
+                                    sw.WriteLine($"{NovoCliente.ID};{NovoCliente.Nome};{NovoCliente.Email};{NovoCliente.Telemovel}");
                                 }
                                 Console.Clear();
 
@@ -179,7 +175,6 @@ namespace Oficina
                                             string linha = sr.ReadLine();
                                             Console.WriteLine("Lido do ficheiro: " + linha);
                                         }
-
                                     }
                                 }
                                 else
@@ -211,8 +206,7 @@ namespace Oficina
 
                                         if (!string.IsNullOrWhiteSpace(linha))
                                         {
-
-                                            string[] partes = linha.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                            string[] partes = linha.Split(';');
 
                                             if (partes.Length >= 4 && int.TryParse(partes[0], out int idLinha))
                                             {
@@ -240,12 +234,11 @@ namespace Oficina
 
                                 Digite();
                                 break;
-
                         }
                         break;
+
                     //CASO 2
                     case 2:
-
                         Console.WriteLine("======= Menu Automóveis =======");
                         Console.Write("\nDigite\n [1] - Inserir Novo Automóvel\n [2] - Ver Todos os Automóveis\n [3] - Mostrar Dados de um Automóvel (por ID)\n [0] - Voltar ao Menu Principal \nOpção: ");
                         do
@@ -283,7 +276,6 @@ namespace Oficina
                                         contador++;
                                     }
                                 }
-
 
                                 foreach (string item in procura)
                                 {
@@ -336,11 +328,10 @@ namespace Oficina
 
                                 using (StreamWriter sw = new StreamWriter(FichaAutomoveis, true))
                                 {
-                                    sw.WriteLine($"{NovoAutomovel.IDAuto}   {NovoAutomovel.IDCliente}   {NovoAutomovel.Marca}   {NovoAutomovel.Modelo}   {NovoAutomovel.Ano}   {NovoAutomovel.num_chassi}");
+                                    sw.WriteLine($"{NovoAutomovel.IDAuto};{NovoAutomovel.IDCliente};{NovoAutomovel.Marca};{NovoAutomovel.Modelo};{NovoAutomovel.Ano};{NovoAutomovel.num_chassi}");
                                 }
 
                                 Digite();
-
                                 break;
 
                             case 2:
@@ -354,7 +345,6 @@ namespace Oficina
                                             string linha = sr.ReadLine();
                                             Console.WriteLine("Lido do ficheiro: " + linha);
                                         }
-
                                     }
                                 }
                                 else
@@ -363,16 +353,14 @@ namespace Oficina
                                 }
 
                                 Digite();
-
                                 break;
 
                             case 3:
-
                                 Console.WriteLine("======= Mostrar Dados de um Automóvel (Por ID) =======");
                                 Console.Write("Digite o ID do automóvel que procura: ");
-                                int idProcurado;
+                                int idAutoProcurado;
 
-                                while (!int.TryParse(Console.ReadLine(), out idProcurado))
+                                while (!int.TryParse(Console.ReadLine(), out idAutoProcurado))
                                 {
                                     Console.Write("Por favor, digite um ID válido (número inteiro): ");
                                 }
@@ -387,20 +375,20 @@ namespace Oficina
 
                                         if (!string.IsNullOrWhiteSpace(linha))
                                         {
-
-                                            string[] partes = linha.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                          
+                                            string[] partes = linha.Split(';');
 
                                             if (partes.Length >= 6 && int.TryParse(partes[0], out int idLinha))
                                             {
-                                                if (idLinha == idProcurado)
+                                                if (idLinha == idAutoProcurado)
                                                 {
                                                     Console.Clear();
                                                     Console.WriteLine("======= Automóvel Encontrado =======");
-                                                    Console.WriteLine($"ID Cliente: {partes[0]}");
-                                                    Console.WriteLine($"ID Automóvel: {partes[1]}");
-                                                    Console.WriteLine($"Marca: {partes[2]}");
-                                                    Console.WriteLine($"Modelo: {partes[3]}");
-                                                    Console.WriteLine($"Ano: {partes[4]}");
+                                                    Console.WriteLine($"ID Automóvel: {partes[0]}");
+                                                    Console.WriteLine($"ID Cliente:    {partes[1]}");
+                                                    Console.WriteLine($"Marca:         {partes[2]}");
+                                                    Console.WriteLine($"Modelo:        {partes[3]}");
+                                                    Console.WriteLine($"Ano:           {partes[4]}");
                                                     Console.WriteLine($"Número do chassi: {partes[5]}");
 
                                                     automovelEncontrado = true;
@@ -413,18 +401,16 @@ namespace Oficina
 
                                 if (!automovelEncontrado)
                                 {
-                                    Console.WriteLine($"\nNão foi encontrado nenhum automóvel com o ID {idProcurado}.");
+                                    Console.WriteLine($"\nNão foi encontrado nenhum automóvel com o ID {idAutoProcurado}.");
                                 }
 
                                 Digite();
                                 break;
-
                         }
                         break;
 
                     //CASO 3
                     case 3:
-
                         Console.WriteLine("======= Pesquisas =======");
                         Console.Write("\nDigite \n [1] - Listar Automóvel de um Cliente\n [0] - Voltar ao Menu Principal \nOpção: ");
                         do
@@ -449,7 +435,6 @@ namespace Oficina
                                 Console.WriteLine("Qual o nome do cliente: ");
                                 nomeCliente = Console.ReadLine();
 
-
                                 using (StreamReader sr = new StreamReader(FichaClientes))
                                 {
                                     while (!sr.EndOfStream)
@@ -458,7 +443,6 @@ namespace Oficina
                                         contador++;
                                     }
                                 }
-
 
                                 foreach (string item in procura)
                                 {
@@ -490,8 +474,10 @@ namespace Oficina
                                         string linha = sr.ReadLine();
                                         if (!string.IsNullOrWhiteSpace(linha))
                                         {
-                                            string[] partes = linha.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                            
+                                            string[] partes = linha.Split(';');
 
+                                            
                                             if (partes.Length >= 6 && int.TryParse(partes[1], out int idClienteFicheiro))
                                             {
                                                 if (idClienteFicheiro == idcliente)
@@ -519,9 +505,7 @@ namespace Oficina
                                 }
                                 Digite();
                                 break;
-
                         }
-
                         break;
                 }
             } while (Pescolha != 0);
